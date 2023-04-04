@@ -1,6 +1,8 @@
 import torch
 import torch.nn as nn
 
+from CommonMethods import split_heads, attend, merge_heads
+
 
 class MultiHeadAttention(nn.Module):
     def __init__(self, dim, num_heads, dropout_rate=0.1):

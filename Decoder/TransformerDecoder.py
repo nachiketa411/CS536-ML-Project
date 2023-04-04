@@ -1,5 +1,7 @@
 import torch.nn as nn
 
+from Decoder.TransformerDecoderLayer import TransformerDecoderLayer
+
 
 class TransformerDecoder(nn.Module):
 

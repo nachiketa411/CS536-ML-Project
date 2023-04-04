@@ -16,7 +16,6 @@ class TransformerDecoderLayer(nn.Module):
     self.feedforward = Encoder(dim, dim_hidden, drop_rate)
 
   def forward(self, target, memory, mask_target, mask_source, layer_cache=None):
-    # TODO: Implement
     normed = self.layer_norm1(target)  # Apply layer_norm1 to target.
     query, self_attention = self.self_attention(normed, normed, normed, mask_target, layer_cache, memory_attention = False)  # Apply self-attention on normed (be sure to use mask_target, layer_cache, and set memory_attention correctly).
 
