@@ -4,6 +4,11 @@ import torch.nn as nn
 from PatchEmbedding import PatchEmbed
 from TransformerBlock import Block
 
+'''
+For Textures Class -> depth = 2
+For Products Class -> depth = 1
+'''
+
 
 class VisionTransformer(nn.Module):
     """Simplified implementation of the Vision transformer.
@@ -48,13 +53,13 @@ class VisionTransformer(nn.Module):
     """
     def __init__(
             self,
-            img_size=384,
+            img_size=128,
             patch_size=16,
             in_chans=3,
             n_classes=1000,
-            embed_dim=768,
+            embed_dim=128,
             depth=12,
-            n_heads=12,
+            n_heads=4,
             mlp_ratio=4.,
             qkv_bias=True,
             p=0.,

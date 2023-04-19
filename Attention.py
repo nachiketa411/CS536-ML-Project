@@ -41,7 +41,7 @@ class Attention(nn.Module):
         self.proj = nn.Linear(dim, dim)
         self.proj_drop = nn.Dropout(proj_p)
 
-    def forward(self, x):
+    def forward(self, x, mask=None):
         """Run forward pass.
         Parameters
         ----------
@@ -70,6 +70,10 @@ class Attention(nn.Module):
         dp = (
            q @ k_t
         ) * self.scale # (n_samples, n_heads, n_patches + 1, n_patches + 1)
+
+        if mask is not None:
+            dp = torch.zeros_like(dp)
+
         attn = dp.softmax(dim=-1)  # (n_samples, n_heads, n_patches + 1, n_patches + 1)
         attn = self.attn_drop(attn)
 
