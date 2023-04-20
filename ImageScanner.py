@@ -50,7 +50,7 @@ def create_vertical_patch(patches, image_size, patch_size):
 #
 def get_image(image_path, train=None):
     image_name, label_name, root_name = image_path
-    if root_name == "MVTec":
+    if root_name == "mvtec":
         label_path = f"{root_name}/{label_name}"
         train_path = None
         if train is True:
@@ -78,6 +78,7 @@ Returns:
 def process_image(image_path, square_patch_size, patch_type, train):
     img = get_image(image_path, train)
     resized_img = resize_image(img)
+    print(resized_img.shape)
     resized_img_size = resized_img.shape[0]
     square_patches = create_patches(resized_img, square_patch_size)
     strips = None
@@ -95,22 +96,12 @@ def process_image(image_path, square_patch_size, patch_type, train):
     return [square_patches, strips]
 
 
-# image_path -> [image_name, label_name, root_name]
-image_path = ["000.png", "bottle", "MVTec"]
-patch_size = 16
-square_patches, strips = process_image(image_path, patch_size, 'Y', True)
-
-print(square_patches.shape)
-print(strips.shape)
-display_image(square_patches[2, 0, 0])
-display_image(strips[1])
-
-# root_path = "MVTec"
+# root_path = "mvtec"
 # label_path = f"{root_path}/bottle"
 # train_path = f"{label_path}/train"
 # images_path = f"{train_path}/good"
 # img = io.imread(f'{images_path}/000.png')
-# # path = "MVTec/bottle/train/good/"
+# # path = "mvtec/bottle/train/good/"
 # # img_name = f'{path}/000.png'
 # # img = read_image(path)
 # # print(im)
@@ -150,3 +141,17 @@ display_image(strips[1])
 # # display_image(horizontal_strips[1].reshape(vertical_strips[1].shape))
 #
 # # display_image(vertical_strips[1])
+
+
+# image_path -> [image_name, label_name, root_name]
+image_path = ["000.png", "bottle", "mvtec"]
+patch_size = 16
+square_patches, strips = process_image(image_path, patch_size, 'Y', True)
+
+print(square_patches.shape)
+print(strips.shape)
+display_image(square_patches[2, 0, 0])
+display_image(strips[1])
+
+
+
