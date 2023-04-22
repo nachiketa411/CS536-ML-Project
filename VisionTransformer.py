@@ -98,7 +98,6 @@ class VisionTransformer(nn.Module):
 
         self.norm = nn.LayerNorm(embed_dim, eps=1e-6)
         self.head = nn.Linear(embed_dim, n_classes)
-        self.soft = nn.Softmax(dim=1)
 
 
     def forward(self, x):
@@ -129,7 +128,5 @@ class VisionTransformer(nn.Module):
 
         cls_token_final = x[:, 0]  # just the CLS token
         x = self.head(cls_token_final)
-        x = self.soft(x)
-        # x = torch.argmax(x, axis=1)
 
         return x
