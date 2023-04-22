@@ -6,7 +6,10 @@ from TransformerBlock import Block
 
 '''
 For Textures Class -> depth = 2
-For Products Class -> depth = 1
+For Products Class -> depth = 1 
+
+For MVTEC -> n_classes = 15
+For HeadCT -> n_classes = 2 i.e. Hemorrhage or not
 '''
 
 
@@ -58,7 +61,7 @@ class VisionTransformer(nn.Module):
             in_chans=3,
             n_classes=1000,
             embed_dim=128,
-            depth=12,
+            depth=2,
             n_heads=4,
             mlp_ratio=4.,
             qkv_bias=True,
@@ -95,6 +98,7 @@ class VisionTransformer(nn.Module):
 
         self.norm = nn.LayerNorm(embed_dim, eps=1e-6)
         self.head = nn.Linear(embed_dim, n_classes)
+        self.soft = nn.Softmax(dim=1)
 
 
     def forward(self, x):
@@ -125,5 +129,7 @@ class VisionTransformer(nn.Module):
 
         cls_token_final = x[:, 0]  # just the CLS token
         x = self.head(cls_token_final)
+        x = self.soft(x)
+        # x = torch.argmax(x, axis=1)
 
         return x

@@ -5,7 +5,8 @@ import torchvision.transforms as transforms
 import matplotlib.pyplot as plt
 import numpy as np
 
-from config import BATCH_SIZE, IMAGE_SIZE, INTERPOL
+from config import BATCH_SIZE, IMAGE_SIZE, INTERPOL, EPOCHS
+from torch.utils.data import DataLoader, sampler, random_split
 
 transform = transforms.Compose(
     [transforms.ToTensor(),
@@ -17,17 +18,15 @@ image_shape = IMAGE_SIZE
 interpol = INTERPOL
 catg = 'carpet'
 
-training_set = md.MVTEC(root='mvtec', train=True, transform=transform,
-                        resize=image_shape, interpolation=interpol, category=catg)
+training_set = md.MVTEC(root='mvtec', train=True, transform=transform, resize=image_shape,
+                        interpolation=interpol, category=catg)
 
-train_loader = torch.utils.data.DataLoader(training_set, batch_size=batch_size,
-                                           shuffle=True)
+train_loader = DataLoader(training_set, batch_size=batch_size, shuffle=True)
 
-testing_set = md.MVTEC(root='mvtec', train=False, transform=transform,
-                        resize=image_shape, interpolation=interpol, category=catg)
+testing_set = md.MVTEC(root='mvtec', train=False, transform=transform, resize=image_shape,
+                       interpolation=interpol, category=catg)
 
-test_loader = torch.utils.data.DataLoader(training_set, batch_size=batch_size,
-                                           shuffle=False)
+test_loader = DataLoader(training_set, batch_size=batch_size, shuffle=False)
 
 classes = ('defective', 'good')
 
@@ -47,4 +46,5 @@ images, labels = next(dataiter)
 imshow(images[0])
 # print label
 print(classes[labels[0]])
+
 
